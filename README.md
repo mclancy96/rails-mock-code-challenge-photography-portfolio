@@ -19,44 +19,57 @@ Before you begin, fork and clone this repo, run `bundle install`, `bin/rails db:
 
 ## The Domain
 
-## The Domain
-
 You've just been hired by the 'NYC Photography Society' - congratulations! The devoted members want you to develop a web application that will allow them to record their favorite photography portfolios and the photos in them. To do this, we need a way to keep track of the many NYC portfolios and record the photos for each portfolio.
 
-Luckily, another developer has already started the job. We have a controller, model, and views to support the creation, listing, and display of portfolios. Visiting `/portfolios` displays all of the portfolios recorded by members. Unfortunately, we don't have a way for members to record the photos in each portfolio. **Each Portfolio has many Photos, and each Photo belongs to a Portfolio.**
+Luckily, another developer has already started the job. We have a controller, model, and views to support the creation, listing, and display of portfolios. Visiting `/portfolios` displays all of the portfolios recorded by members. Unfortunately, we don't have a way for members to record the photos in each portfolio.
 
-## Instructions / Deliverables
+## Deliverables
 
-***To help you complete this assignment, we've listed the steps required. Read through them carefully to get a sense of the requirements for this code challenge, and then tackle them one by one.***
+Implement the following features in this repository. Each item specifies exactly what must be built, how users should interact with it, and what interface elements are required.
 
-1. Before you start building the new functionality, make sure that you are able to create and view a new portfolio.
+1. **Set Up Photo Model and Associations**
+    + Create a `Photo` model and database table with columns for `name`, `description`, and a `portfolio_id` foreign key.
+    + Set up the association: each `Photo` belongs_to a `Portfolio`; each `Portfolio` has_many `Photos`.
 
-2. Let's build following an inside-out approach (Domain model to views). Begin by developing the classes required to persist Photos and associate them to a Portfolio. You should then be able to run the code below:
+2. **Database Migrations**
 
-```Ruby
-photo.portfolio = portfolio
-photo.save
-portfolio.photos.first === photo # should return true
-portfolio = Portfolio.first
-photo = Photo.create(name:'Sunset Over Brooklyn', description: 'A beautiful sunset photo taken from the Brooklyn Bridge')
-photo.portfolio = portfolio
-photo.save
-portfolio.photos.first === photo # should return true
-```
+    + Create and run migrations to add the `photos` table and set up the foreign key relationship to `portfolios`.
+    + Ensure all migrations are present and can be run from a fresh database setup.
 
-3. Set up validations for the photo and the portfolio:
+3. **Model Validations**
 
-+ A photo must have a name and a description.
-+ A portfolio must have a unique name and an address.
+    + In the `Photo` model, require presence of `name` and `description`.
+    + In the `Portfolio` model, require presence and uniqueness of `name`, and presence of `address`.
+    + Validations must display error messages in the relevant forms when invalid data is submitted.
 
-4. Now that our backend domain model is properly setup we can build the user facing functionality. Adding this functionality will require you to develop code across many different parts of the application including routes, controllers and views.
+4. **RESTful Routes and Controller Actions for Photos**
 
-Items needed to complete an application that works as described include:
+    + Add RESTful routes for `photos` (at minimum: `new`, `create`, `show`).
+    + Implement `PhotosController` actions for `new`, `create`, and `show`.
+    + The `new` photo form must be accessible from a `Portfolio` show page via a clearly labeled link or button (e.g., "Add Photo").
+    + After creating a photo, redirect to the photo's show page.
 
-+ `Photo` new, create, and show actions & corresponding views that display all shown data
-+ `Portfolio` show page updated to list all its photos
-+ All the links and forms to connect the models (the `Photo` show page should link back to its `Portfolio` show page)
+5. **Photo Form and Error Handling**
 
----
+    + The `new` photo form must use Rails form helpers and allow the user to enter a name and description.
+    + The form must include a way to associate the photo with a specific portfolio (e.g., hidden field or select menu if needed).
+    + If the form submission fails validations, display error messages above the form fields.
 
-+ Don't be confused by the sottocasanyc.com/brooklyn/menu website the demo shows. It is just being used to obtain a photo name and description.
+6. **Portfolio Show Page: List Photos**
+
+    + On each `Portfolio` show page, display a list of all photos belonging to that portfolio.
+    + Each photo in the list must link to its individual show page.
+    + If a portfolio has no photos, display a message indicating so.
+
+7. **Photo Show Page**
+
+    + The photo show page must display the photo's name, description, and a link back to its parent portfolio's show page.
+
+8. **Navigation and User Flow**
+
+    + All pages must include navigation links to return to the portfolios index and to the relevant parent portfolio where appropriate.
+    + The user must be able to navigate from the portfolios index to a portfolio show page, from there to add a new photo, and from a photo show page back to its portfolio.
+
+9. **Rails Console Usage**
+
+    + All associations and validations must work as expected in the Rails console. For example, creating a photo and assigning it to a portfolio should persist and be queryable via ActiveRecord.
