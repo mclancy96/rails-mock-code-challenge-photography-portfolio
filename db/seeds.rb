@@ -8,16 +8,18 @@
 #
 #   1
 Portfolio.destroy_all
- 
-Portfolio.create!([{
-  name: "Sottocasa NYC",
-  address: "298 Atlantic Ave, Brooklyn, NY 11201",
-},
-{
-  name: "PizzArte",
-  address: "69 W 55th St, New York, NY 10019",
-},
-{
-  name: "San Matteo NYC",
-  address: "1559 2nd Ave, New York, NY 10028"
-}])
+
+Portfolio.create!([
+  {
+    name: "Urban Exploration",
+    address: "298 Atlantic Ave, Brooklyn, NY 11201",
+  },
+  {
+    name: "Nature's Palette",
+    address: "69 W 55th St, New York, NY 10019",
+  },
+  {
+    name: "Portrait Stories",
+    address: "1559 2nd Ave, New York, NY 10028"
+  }
+])
